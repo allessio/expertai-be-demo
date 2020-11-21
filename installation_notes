@@ -1,0 +1,45 @@
+------------------------------------------------------------------------------------------------------------
+Prerequisites
+------------------------------------------------------------------------------------------------------------
+
+- MySQL
+- Tomcat
+
+------------------------------------------------------------------------------------------------------------
+DB installation
+------------------------------------------------------------------------------------------------------------
+
+- run DDL_demo.sql
+- run DML_demo.sql
+
+
+------------------------------------------------------------------------------------------------------------
+Installation of custom dependencies
+------------------------------------------------------------------------------------------------------------
+
+- install external jar to .m2:
+
+	mvn install:install-file -Dfile=c:\Programs\workspace_cizrm\expert.ai.assessment.init-main\libs\nlapi-java-sdk-1.0.0-RC.1.jar -DgroupId=ai.expert.nlapi -DartifactId=nlapi -Dversion=1.0.0-RC.1 -Dpackaging=jar
+
+- add dependency to pom:
+
+	<dependency>
+		  <groupId>ai.expert.nlapi</groupId>
+		  <artifactId>nlapi</artifactId>
+		  <version>1.0.0-RC.1</version>
+	</dependency>
+	
+------------------------------------------------------------------------------------------------------------
+App properties setup
+------------------------------------------------------------------------------------------------------------
+	
+- in application.properties:
+	- set <expertai.inputFolder>
+	- set <expertai.outputFolder>
+	- set <expertai.username>
+	- set <expertai.password>
+	
+- in log4j.properties set <log4j.appender.A2.File>
+
+
+------------------------------------------------------------------------------------------------------------

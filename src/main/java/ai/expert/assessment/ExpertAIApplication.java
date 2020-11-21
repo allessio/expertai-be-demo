@@ -11,7 +11,6 @@ public class ExpertAIApplication {
 
    public static void main(String[] args) {
       SpringApplication.run(ExpertAIApplication.class, args);
-
    }
 
 }
