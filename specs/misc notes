@@ -1,0 +1,11 @@
+install external jar:
+
+	mvn install:install-file -Dfile=c:\Programs\workspace_cizrm\expert.ai.assessment.init-main\libs\nlapi-java-sdk-1.0.0-RC.1.jar -DgroupId=ai.expert.nlapi -DartifactId=nlapi -Dversion=1.0.0-RC.1 -Dpackaging=jar
+
+add dependency to pom:
+
+	<dependency>
+		  <groupId>ai.expert.nlapi</groupId>
+		  <artifactId>nlapi</artifactId>
+		  <version>1.0.0-RC.1</version>
+	</dependency>

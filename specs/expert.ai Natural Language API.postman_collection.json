@@ -1,0 +1,365 @@
+{
+	"info": {
+		"_postman_id": "e6997958-da1b-4e94-87ba-c31dce0c36f3",
+		"name": "expert.ai Natural Language API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Document analysis",
+			"item": [
+				{
+					"name": "full",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"document\": {\r\n        \"text\": \"Michael Jordan was one of the best basketball players of all time. Scoring was Jordan's stand-out skill, but he still holds a defensive NBA record, with eight steals in a half.\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-server}}/v1/analyze/standard/en",
+							"protocol": "https",
+							"host": [
+								"{{api-server}}"
+							],
+							"path": [
+								"v1",
+								"analyze",
+								"standard",
+								"en"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "disambiguation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"document\": {\r\n        \"text\": \"Michael Jordan was one of the best basketball players of all time. Scoring was Jordan's stand-out skill, but he still holds a defensive NBA record, with eight steals in a half.\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-server}}/v1/analyze/standard/en/disambiguation",
+							"protocol": "https",
+							"host": [
+								"{{api-server}}"
+							],
+							"path": [
+								"v1",
+								"analyze",
+								"standard",
+								"en",
+								"disambiguation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "entities",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"document\": {\r\n        \"text\": \"Michael Jordan was one of the best basketball players of all time. Scoring was Jordan's stand-out skill, but he still holds a defensive NBA record, with eight steals in a half.\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-server}}/v1/analyze/standard/en/entities",
+							"protocol": "https",
+							"host": [
+								"{{api-server}}"
+							],
+							"path": [
+								"v1",
+								"analyze",
+								"standard",
+								"en",
+								"entities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "relevants",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"document\": {\r\n\t\t\"text\": \"At first there was considerable trouble about getting the machine up in the air and the engine well up to speed. They did this by running along a single-rail track perhaps 200 feet long. It was also, in the early experiments, found advisable to run against the wind, because they could then have a greater time to practice in the air and not get so far away from the building where it was stored. Since they can come around to the starting-point, however, they can start with the wind even behind them; and with a strong wind behind it is an easy matter to make even more than a mile a minute. The operator takes his place lying flat on his face. This position offers less resistance to the wind. The engine is started and got up to speed. The machine is held until ready to start by a sort of trap to be sprung when all is ready; then with a tremendous flapping and snapping of the four-cylinder engine, the huge machine springs aloft. When it first turned that circle, and came near the starting-point. I was right in front it; and I said then, and I believe still, it was one of the grandest sights, if not the grandest sight, of my life. Imagine a locomotive that has left its track, and is climbing up in the air right toward you—a locomotive without any wheels, we will say, but with white wings instead, we will further say-a locomotive made of aluminum. Well, now, imagine this white locomotive, with wings that spread 20 feet each way, coming right toward you with a tremendous flap of its propellers, and you will have something like what I saw. The younger brother bade me move to one side for fear it might come down suddenly; but I tell you, friends, the sensation that one feels in such a crisis is something hard to describe. The attendant at one time, when the rope came off that started it, said he was shaking from head to foot as if he had a fit of ague. His shaking was uncalled for, however, for the intrepid manager succeeded in righting up his craft, and she made one of her very best flights. I may add, however, that the apparatus is secured by patents, both in this and in foreign countries; and as nobody else has as yet succeeded in doing any thing like what they have done I hope no millionaire or syndicate will try to rob them of the invention or laurels they have so fairly and honestly earned.  When Columbus discovered America he did not know what the outcome would be, and no one at that time knew; and I doubt if the wildest enthusiast caught a glimpse of what really did come from his discovery. In a like manner these two brothers have probably not even a faint glimpse of what their discovery is going to bring to the children of men. No one living can give a guess of what is coming along this line, much better than any one living could conjecture the final outcome of Columbus' experiment when lie pushed off through the trackless waters. Possibly we may be able to fly over the north pole, even if we should not succeed in tacking the \\\"stars and stripes\\\" to its uppermost end.\"\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-server}}/v1/analyze/standard/en/relevants",
+							"protocol": "https",
+							"host": [
+								"{{api-server}}"
+							],
+							"path": [
+								"v1",
+								"analyze",
+								"standard",
+								"en",
+								"relevants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contexts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-server}}/v1/contexts",
+							"protocol": "https",
+							"host": [
+								"{{api-server}}"
+							],
+							"path": [
+								"v1",
+								"contexts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Document classification",
+			"item": [
+				{
+					"name": "iptc",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"document\": {\r\n        \"text\": \"Michael Jordan was one of the best basketball players of all time. Scoring was Jordan's stand-out skill, but he still holds a defensive NBA record, with eight steals in a half.\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-server}}/v1/categorize/iptc/en",
+							"protocol": "https",
+							"host": [
+								"{{api-server}}"
+							],
+							"path": [
+								"v1",
+								"categorize",
+								"iptc",
+								"en"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "taxonomies",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-server}}/v1/taxonomies",
+							"protocol": "https",
+							"host": [
+								"{{api-server}}"
+							],
+							"path": [
+								"v1",
+								"taxonomies"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "token",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"yourusername\",\r\n    \"password\": \"yourpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{auth-server}}/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"{{auth-server}}"
+					],
+					"path": [
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0f233913-fc5b-4999-b12b-177491ab22d7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b85417d2-4a3f-4188-b585-e001e22c6cda",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "bdfd1fd3-5cfa-40a8-b768-ec790590007a",
+			"key": "token",
+			"value": "initial"
+		},
+		{
+			"id": "112dadb5-5fd6-4103-adcf-206a834cd099",
+			"key": "api-server",
+			"value": "nlapi.expert.ai"
+		},
+		{
+			"id": "761c3151-f374-4b8e-b58d-e9305ded632d",
+			"key": "auth-server",
+			"value": "developer.expert.ai"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
