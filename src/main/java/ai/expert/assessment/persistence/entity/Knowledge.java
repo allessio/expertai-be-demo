@@ -14,6 +14,7 @@ public class Knowledge implements Serializable {
 
    @Id
    private Long syncon;
+   
    private String label;
 
    public Long getSyncon() {

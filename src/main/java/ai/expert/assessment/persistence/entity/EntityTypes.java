@@ -3,8 +3,6 @@ package ai.expert.assessment.persistence.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,8 +13,8 @@ public class EntityTypes implements Serializable {
    private static final long serialVersionUID = 7976346877614271196L;
 
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private String entity_type;
+   
    private String description;
 
    public String getEntity_type() {

@@ -2,6 +2,7 @@ package ai.expert.assessment.utils;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -20,11 +21,8 @@ public class FileReader {
     public void readFiles(String inputFolder) {
 
         File folder = new File(inputFolder);
-        File[] listOfFiles = null;
 
-        listOfFiles = folder.listFiles();
-
-        for (File file : listOfFiles) {
+        for (File file : folder.listFiles()) {
             if (file.isFile()) {
                 FILE_READER_LOGGER.info("\t\tReading file: " + file.getName());
                 getFiles().add(file);

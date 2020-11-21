@@ -3,6 +3,8 @@ package ai.expert.assessment.persistence.entity;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,16 +13,19 @@ import javax.persistence.Table;
 public class Contents {
 
    @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
    private Long content_id;
 
-   private String content;
+   private String document_name;
+   private String document_checksum;
+   private byte[] content;
 
    private LocalDateTime created_at;
    private LocalDateTime ws_checked_at;
 
    private String content_language;
    private String ws_checker_version;
-   private Boolean wschecker_success;
+   private Boolean ws_checker_success;
 
    public Long getContent_id() {
       return content_id;
@@ -30,11 +35,27 @@ public class Contents {
       this.content_id = content_id;
    }
 
-   public String getContent() {
+   public String getDocument_name() {
+      return document_name;
+   }
+
+   public void setDocument_name(String document_name) {
+      this.document_name = document_name;
+   }
+
+   public String getDocument_checksum() {
+      return document_checksum;
+   }
+
+   public void setDocument_checksum(String document_checksum) {
+      this.document_checksum = document_checksum;
+   }
+
+   public byte[] getContent() {
       return content;
    }
 
-   public void setContent(String content) {
+   public void setContent(byte[] content) {
       this.content = content;
    }
 
@@ -71,11 +92,11 @@ public class Contents {
    }
 
    public Boolean getWschecker_success() {
-      return wschecker_success;
+      return ws_checker_success;
    }
 
-   public void setWschecker_success(Boolean wschecker_success) {
-      this.wschecker_success = wschecker_success;
+   public void setWschecker_success(Boolean ws_checker_success) {
+      this.ws_checker_success = ws_checker_success;
    }
 
 }
