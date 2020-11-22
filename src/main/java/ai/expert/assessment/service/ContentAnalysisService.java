@@ -1,6 +1,5 @@
 package ai.expert.assessment.service;
 
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,10 @@ import org.springframework.stereotype.Service;
 import ai.expert.assessment.persistence.entity.Content;
 import ai.expert.assessment.persistence.entity.ContentAnalysis;
 import ai.expert.assessment.persistence.repository.ContentAnalysisRepository;
+import ai.expert.assessment.service.interfaces.IAppInitService;
 import ai.expert.assessment.service.interfaces.IContentAnalysisService;
 import ai.expert.assessment.service.interfaces.IContentsService;
 import ai.expert.assessment.utils.Globals;
-import ai.expert.nlapi.security.Authentication;
 import ai.expert.nlapi.v1.API;
 import ai.expert.nlapi.v1.Analyzer;
 import ai.expert.nlapi.v1.AnalyzerConfig;
@@ -35,20 +34,44 @@ public class ContentAnalysisService implements IContentAnalysisService {
 
    @Autowired
    IContentsService contentsService;
+   
+   @Autowired 
+   IAppInitService appInitService;
 
    private static final Logger logger = LogManager.getLogger();
 
-   public void analyzeAllTypesAllPersistedDocs(Authentication authenticator, IContentsService contentsService) {
-//      analyzeCategoriesAllPersistedDocs(authenticator, contentsService);
-      analyzeFullAllPersistedDocs(authenticator, contentsService);
+   public void analyzeAllTypesAllPersistedDocs() {
+//      analyzeCategoriesAllPersistedDocs();
+//      analyzeFullAllPersistedDocs();
    }
 
-   public void analyzeCategoriesAllPersistedDocs(Authentication authenticator, IContentsService contentsService) {
+   /**
+    * Category analyzer for all documents persisted in DB.
+    */
+   @Override
+   public void analyzeCategoriesAllPersistedDocs() {
+      analyzeCategoriesPersistedDocs(0L, -1L);
+   }
+   
+   /**
+    * Category analyzer for certain documents persisted in DB. 
+    * Document to analyze are identified by range of ID document docIDFrom to docIDTo.
+    * If docIDFrom > docIDFrom, all documents are analyzed
+    * 
+    * @param docIDFrom
+    * @param docIDTo
+    */
+   public void analyzeCategoriesPersistedDocs(Long docIDFrom, Long docIDTo) {
       try {
-         Categorizer categorizer = createCategorizer(authenticator);
+         Categorizer categorizer = createCategorizer();
 
          // for all contents in DB
          for (Content content : contentsService.getAll()) {
+            // check if document should be analyzed by provided IDs range
+            if (docIDFrom > docIDTo || content.getContent_id() < docIDFrom || content.getContent_id() > docIDTo) {
+               continue;
+            }
+            
             String contentParts[] = contentSplitter(content);
             List<ContentAnalysis> contAnalysisList = new ArrayList<>();
 
@@ -62,9 +85,12 @@ public class ContentAnalysisService implements IContentAnalysisService {
                contAn.setContent(content);
                contAn.setContent_language(getLanguageFromWSResponse(categorization));
                contAn.setContent_part_id(Long.valueOf(i));
-               contAn.setWs_checker_success(categorization.isSuccess());
-               contAn.setWs_checker_version(categorization.getData().getVersion());
-               contAn.setWs_checker_response(categorization.toJSON().getBytes());
+               
+               if (categorization != null) {
+                  contAn.setWs_checker_success(categorization.isSuccess());
+                  contAn.setWs_checker_version(categorization.getData().getVersion());
+                  contAn.setWs_checker_response(categorization.toJSON().getBytes(Globals.DEFAULT_ENCODING));
+               }
 
                contAnalysisList.add(contAn);
             }
@@ -78,12 +104,25 @@ public class ContentAnalysisService implements IContentAnalysisService {
       }
    }
 
-   public void analyzeFullAllPersistedDocs(Authentication authenticator, IContentsService contentsService) {
+   
+   public void analyzeFullAllPersistedDocs() {
+      analyzeFullPersistedDocs(0L, -1L);
+   }
+   
+   /**
+    * Category analyzer for all documents persisted in DB.
+    */
+   public void analyzeFullPersistedDocs(Long docIDFrom, Long docIDTo) {
       try {
-         Analyzer analyzer = createAnalyzer(authenticator);
+         Analyzer analyzer = createAnalyzer();
 
          // for all contents in DB
          for (Content content : contentsService.getAll()) {
+            // check if document should be analyzed by provided IDs range
+            if (docIDFrom > docIDTo || content.getContent_id() < docIDFrom || content.getContent_id() > docIDTo) {
+               continue;
+            }
+            
             String contentParts[] = contentSplitter(content);
             List<ContentAnalysis> contAnalysisList = new ArrayList<>();
 
@@ -97,9 +136,12 @@ public class ContentAnalysisService implements IContentAnalysisService {
                contAn.setContent(content);
                contAn.setContent_language(getLanguageFromWSResponse(analysis));
                contAn.setContent_part_id(Long.valueOf(i));
-               contAn.setWs_checker_success(analysis.isSuccess());
-               contAn.setWs_checker_version(analysis.getData().getVersion());
-               contAn.setWs_checker_response(analysis.toJSON().getBytes());
+               
+               if (analysis != null) {
+                  contAn.setWs_checker_success(analysis.isSuccess());
+                  contAn.setWs_checker_version(analysis.getData().getVersion());
+                  contAn.setWs_checker_response(analysis.toJSON().getBytes(Globals.DEFAULT_ENCODING));
+               }
 
                contAnalysisList.add(contAn);
             }
@@ -130,10 +172,16 @@ public class ContentAnalysisService implements IContentAnalysisService {
       return "en"; // stub
    }
 
+   /**
+    * Splits content into chunks of max size < Globals.WS_CONTENT_LIMIT
+    * 
+    * @param content
+    * @return array of content parts satisfying Globals.WS_CONTENT_LIMIT
+    */
    private String[] contentSplitter(Content content) {
       List<String> contentParts = new ArrayList<>();
       StringBuilder sb = new StringBuilder();
-      String contentParagraphs[] = new String(content.getContent(), StandardCharsets.UTF_8).split("\\r?\\n");
+      String contentParagraphs[] = new String(content.getContent(), Globals.DEFAULT_ENCODING).split("\\r?\\n");
 
       for (int i = 0; i < contentParagraphs.length; i++) {
 
@@ -178,17 +226,17 @@ public class ContentAnalysisService implements IContentAnalysisService {
       return contentParts.toArray(new String[0]);
    }
 
-   private Categorizer createCategorizer(Authentication authenticator) throws Exception {
+   private Categorizer createCategorizer() throws Exception {
       return new Categorizer(CategorizerConfig.builder().withVersion(API.Versions.V1).withTaxonomy(API.Taxonomies.IPTC)
-            .withLanguage(API.Languages.en).withAuthentication(authenticator).build());
+            .withLanguage(API.Languages.en).withAuthentication(appInitService.getAuthentication()).build());
    }
    
-   private Analyzer createAnalyzer(Authentication authenticator) throws Exception {
+   private Analyzer createAnalyzer() throws Exception {
       return new Analyzer(AnalyzerConfig.builder()
             .withVersion(API.Versions.V1)
             .withContext(API.Contexts.STANDARD)
             .withLanguage(API.Languages.en)
-            .withAuthentication(authenticator)
+            .withAuthentication(appInitService.getAuthentication())
             .build());
    }
 
