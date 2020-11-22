@@ -25,7 +25,7 @@ public class CategorizationTest {
 
     //Method for setting the authentication credentials - set your credentials here.
     public static Authentication createAuthentication() throws Exception {
-        Authenticator authenticator = new BasicAuthenticator(new Credential("PUT HERE YOUR USERNAME", " PUT HERE YOUR PASSWORD"));
+        Authenticator authenticator = new BasicAuthenticator(new Credential("USERNAME", "PWD"));
         return new Authentication(authenticator);
     }
     

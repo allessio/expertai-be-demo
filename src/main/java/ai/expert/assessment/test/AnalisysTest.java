@@ -25,7 +25,7 @@ public class AnalisysTest {
     
     //Method for setting the authentication credentials - set your credentials here.
     public static Authentication createAuthentication() throws Exception {
-        Authenticator authenticator = new BasicAuthenticator(new Credential("PUT HERE YOUR USERNAME", " PUT HERE YOUR PASSWORD"));
+        Authenticator authenticator = new BasicAuthenticator(new Credential("USERNAME", "PWD"));
         return new Authentication(authenticator);
     }
 
@@ -46,18 +46,22 @@ public class AnalisysTest {
             ResponseDocument response = null;
             
             // Disambiguation Analisys
+            System.out.println("============== Disambiguation Analisys");
             response = analyzer.disambiguation(getSampleText());
             response.prettyPrint();
 
             // Relevants Analisys
+            System.out.println("============== Relevants Analisys");
             response = analyzer.relevants(getSampleText());
             response.prettyPrint();
 
             // Entities Analisys
+            System.out.println("============== Entities Analisys");
             response = analyzer.entities(getSampleText());
             response.prettyPrint();
             
             // Full Analisys
+            System.out.println("============== Full Analisys");
             response = analyzer.analyze(getSampleText());
             response.prettyPrint();
         }

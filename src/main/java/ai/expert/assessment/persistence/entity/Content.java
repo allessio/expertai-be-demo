@@ -1,19 +1,27 @@
 package ai.expert.assessment.persistence.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "contents")
-public class Contents {
+public class Content  implements Serializable {
+
+   private static final long serialVersionUID = 6200599842291806346L;
 
    @Id
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
+//   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long content_id;
 
    private String document_name;
@@ -21,11 +29,10 @@ public class Contents {
    private byte[] content;
 
    private LocalDateTime created_at;
-   private LocalDateTime ws_checked_at;
 
-   private String content_language;
-   private String ws_checker_version;
-   private Boolean ws_checker_success;
+   @OneToMany(targetEntity=ContentAnalysis.class, fetch = FetchType.LAZY, mappedBy = "content", cascade = { CascadeType.ALL })
+   @JsonIgnore
+   private List<ContentAnalysis> contentAnalysis = new ArrayList<>();
 
    public Long getContent_id() {
       return content_id;
@@ -67,36 +74,12 @@ public class Contents {
       this.created_at = created_at;
    }
 
-   public LocalDateTime getWs_checked_at() {
-      return ws_checked_at;
+   public List<ContentAnalysis> getContentAnalysis() {
+      return contentAnalysis;
    }
 
-   public void setWs_checked_at(LocalDateTime ws_checked_at) {
-      this.ws_checked_at = ws_checked_at;
-   }
-
-   public String getContent_language() {
-      return content_language;
-   }
-
-   public void setContent_language(String content_language) {
-      this.content_language = content_language;
-   }
-
-   public String getWs_checker_version() {
-      return ws_checker_version;
-   }
-
-   public void setWs_checker_version(String ws_checker_version) {
-      this.ws_checker_version = ws_checker_version;
-   }
-
-   public Boolean getWschecker_success() {
-      return ws_checker_success;
-   }
-
-   public void setWschecker_success(Boolean ws_checker_success) {
-      this.ws_checker_success = ws_checker_success;
+   public void setContentAnalysis(List<ContentAnalysis> contentAnalysis) {
+      this.contentAnalysis = contentAnalysis;
    }
 
 }

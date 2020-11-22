@@ -21,8 +21,14 @@ public class Globals {
     public static final String ANALYSIS_TYPE_EXT_FULL = "_extraction_full";
     public static final String OUTPUT_EXTENSION = ".json";
 
+    public static final int WS_CONTENT_LIMIT = 10000;
+    
+    public static final String PARAGRAPH_DELIMITER_FOR_WS = " ";
+    public static final String SENTENCE_DELIMITER_FOR_WS = ". ";
+    
     public static final String ENTITYTYPES_ENDPOINT = "/entitytypes";
     public static final String ENTITIES_ENDPOINT = "/entities";
     public static final String CONTENTS_ENDPOINT = "/contents";
+    public static final String CONTENT_ANALYSIS_ENDPOINT = "/contentanalysis";
     public static final String KNOWLEDGE_ENDPOINT = "/knowledge";
 }

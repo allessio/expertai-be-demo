@@ -5,11 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import ai.expert.assessment.persistence.entity.Content;
+import ai.expert.assessment.persistence.entity.ContentAnalysis;
 
 @Repository
-public interface ContentsRepository extends JpaRepository<Content, Long> {
+public interface ContentAnalysisRepository extends JpaRepository<ContentAnalysis, Long> {
 
-   Optional<Content> findById(Long id);
+   Optional<ContentAnalysis> findById(Long id);
    
 }

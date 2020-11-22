@@ -28,7 +28,7 @@ public class ContentEntity implements Serializable {
 
    @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "content_id", nullable = false)
-   private Contents content_id;
+   private Content content_id;
 
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "entity_id", nullable = false)
@@ -46,11 +46,11 @@ public class ContentEntity implements Serializable {
       this.content_entity_id = content_entity_id;
    }
 
-   public Contents getContent_id() {
+   public Content getContent_id() {
       return content_id;
    }
 
-   public void setContent_id(Contents content_id) {
+   public void setContent_id(Content content_id) {
       this.content_id = content_id;
    }
 

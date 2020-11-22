@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import ai.expert.assessment.persistence.entity.Contents;
+import ai.expert.assessment.persistence.entity.Content;
 import ai.expert.assessment.persistence.repository.ContentsRepository;
 import ai.expert.assessment.service.interfaces.IContentsService;
 
@@ -19,27 +19,27 @@ public class ContentsService implements IContentsService {
    ContentsRepository repo;
 
    @Override
-   public List<Contents> getAll() {
+   public List<Content> getAll() {
       return repo.findAll();
    }
 
    @Override
-   public Page<Contents> getAllPageable(Pageable pageable) {
+   public Page<Content> getAllPageable(Pageable pageable) {
       return repo.findAll(pageable);
    }
 
    @Override
-   public Contents create(Contents entity) {
+   public Content create(Content entity) {
       return repo.saveAndFlush(entity);
    }
 
    @Override
-   public Contents update(Contents entity) {
+   public Content update(Content entity) {
       return repo.save(entity);
    }
 
    @Override
-   public Optional<Contents> read(Long id) {
+   public Optional<Content> read(Long id) {
       return repo.findById(id);
    }
 
