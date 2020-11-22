@@ -21,7 +21,6 @@ public class Content  implements Serializable {
    private static final long serialVersionUID = 6200599842291806346L;
 
    @Id
-//   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long content_id;
 
    private String document_name;

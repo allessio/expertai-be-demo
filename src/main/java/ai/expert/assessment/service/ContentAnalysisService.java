@@ -19,7 +19,6 @@ import ai.expert.assessment.persistence.repository.ContentAnalysisRepository;
 import ai.expert.assessment.service.interfaces.IContentAnalysisService;
 import ai.expert.assessment.service.interfaces.IContentsService;
 import ai.expert.assessment.utils.Globals;
-import ai.expert.assessment.utils.ResourceUtils;
 import ai.expert.nlapi.security.Authentication;
 import ai.expert.nlapi.v1.API;
 import ai.expert.nlapi.v1.Analyzer;
@@ -87,7 +86,6 @@ public class ContentAnalysisService implements IContentAnalysisService {
          for (Content content : contentsService.getAll()) {
             String contentParts[] = contentSplitter(content);
             List<ContentAnalysis> contAnalysisList = new ArrayList<>();
-//            Content cont = ResourceUtils.checkFound(contentsService.read(content.getContent_id()));
 
             // for all parts of each content
             for (int i = 0; i < contentParts.length; i++) {
@@ -116,15 +114,15 @@ public class ContentAnalysisService implements IContentAnalysisService {
    }
 
    public void analyzeDisambiguationAllPersistedDocs() {
-      // TODO: to implement
+      // TODO: to implement if needed
    }
 
    public void analyzeRelevantsAllPersistedDocs() {
-      // TODO: to implement
+      // TODO: to implement if needed
    }
 
    public void analyzeEntitiesAllPersistedDocs() {
-      // TODO: to implement
+      // TODO: to implement if needed
    }
 
    private String getLanguageFromWSResponse(ResponseDocument response) {
@@ -168,7 +166,7 @@ public class ContentAnalysisService implements IContentAnalysisService {
                      sb.append(Globals.SENTENCE_DELIMITER_FOR_WS);
                   }
                } else {
-                  // TODO break sentence into logical parts, if arrives a really huge one
+                  // TODO if needed, break sentence into logical parts (if arrives a really huge one)
                }
             }
          }
