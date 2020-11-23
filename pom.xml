@@ -18,21 +18,8 @@
 	        <plugin>
 			    <artifactId>maven-war-plugin</artifactId>
 			      <configuration>
-				  	<!--  <webXml>src\main\webapp\WEB-INF\web.xml</webXml>  -->   
 				  	<failOnMissingWebXml>false</failOnMissingWebXml>     
 				  </configuration>
-<!-- 
-			    <configuration>
-			        <attachClasses>true</attachClasses>
-			        <webXml>target/web.xml</webXml>
-			        <webResources>
-			            <resource>
-			                <directory>src/main/webapp</directory>
-			                <filtering>true</filtering>
-			            </resource>
-			        </webResources>
-			    </configuration>
- -->			    
 			</plugin>
 	    </plugins>
     </build>
@@ -114,6 +101,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
 
 		<dependency>

@@ -1,42 +1,34 @@
-package ai.expert.assessment.persistence.entity;
+package ai.expert.assessment.controller.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import ai.expert.assessment.persistence.entity.ContentAnalysis;
+import ai.expert.assessment.utils.Globals;
 
-@Entity
-@Table(name = "content_analysis")
-public class ContentAnalysis implements Serializable {
+public class ContentAnalysisDto implements Serializable {
 
-   private static final long serialVersionUID = -7189871914469337082L;
+   private static final long serialVersionUID = -859846377945801756L;
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(columnDefinition = "serial")
    private Long analysis_id;
-   
    private String analysis_type;
-
-   @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-   @JoinColumn(name = "content_id", referencedColumnName = "content_id")
-   private Content content;
-
    private Long content_part_id;
    private LocalDateTime analyzed_at;
    private String content_language;
    private String ws_checker_version;
    private Boolean ws_checker_success;
-   private byte[] ws_checker_response;
+   private String ws_checker_response;
+
+   public ContentAnalysisDto(ContentAnalysis ca) {
+      this.analysis_id = ca.getAnalysis_id();
+      this.analysis_type = ca.getAnalysis_type();
+      this.content_part_id = ca.getContent_part_id();
+      this.analyzed_at = ca.getAnalyzed_at();
+      this.content_language = ca.getContent_language();
+      this.ws_checker_version = ca.getWs_checker_version();
+      this.ws_checker_success = ca.getWs_checker_success();
+      this.ws_checker_response = ca.getWs_checker_response() != null ? new String(ca.getWs_checker_response(), Globals.DEFAULT_ENCODING) : null;
+   }
 
    public Long getAnalysis_id() {
       return analysis_id;
@@ -54,12 +46,12 @@ public class ContentAnalysis implements Serializable {
       this.analysis_type = analysis_type;
    }
 
-   public Content getContent() {
-      return content;
+   public Long getContent_part_id() {
+      return content_part_id;
    }
 
-   public void setContent(Content content) {
-      this.content = content;
+   public void setContent_part_id(Long content_part_id) {
+      this.content_part_id = content_part_id;
    }
 
    public LocalDateTime getAnalyzed_at() {
@@ -94,19 +86,11 @@ public class ContentAnalysis implements Serializable {
       this.ws_checker_success = ws_checker_success;
    }
 
-   public Long getContent_part_id() {
-      return content_part_id;
-   }
-
-   public void setContent_part_id(Long content_part_id) {
-      this.content_part_id = content_part_id;
-   }
-
-   public byte[] getWs_checker_response() {
+   public String getWs_checker_response() {
       return ws_checker_response;
    }
 
-   public void setWs_checker_response(byte[] ws_checker_response) {
+   public void setWs_checker_response(String ws_checker_response) {
       this.ws_checker_response = ws_checker_response;
    }
 
