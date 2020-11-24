@@ -21,6 +21,8 @@ public class FileUploader {
 
    private static final Logger logger = LogManager.getLogger();
 
+   private List<Content> listCont = null; 
+         
    public FileUploader() {
    }
 
@@ -61,12 +63,28 @@ public class FileUploader {
       logger.info("File: " + file.getAbsolutePath());
       logger.info("Hash: " + fileHash);
 
-      Content doc = new Content();
-      doc.setDocument_name(file.getName());
-      doc.setDocument_checksum(fileHash);
-      doc.setContent(fileBytes);
-      doc.setCreated_at(LocalDateTime.now());
+      if (listCont == null) {
+         listCont = contentsService.getAll();   
+      }
 
-      contentsService.create(doc);
+      boolean filePresentInDB = false;
+      
+      for (Content cont : listCont) {
+         if (cont.getDocument_checksum().equals(fileHash)) {
+            filePresentInDB = true;
+            logger.info("Is already present in DB. Skipping.");
+            break;
+         }
+      }
+      
+      if (!filePresentInDB) {
+         Content doc = new Content();
+         doc.setDocument_name(file.getName());
+         doc.setDocument_checksum(fileHash);
+         doc.setContent(fileBytes);
+         doc.setCreated_at(LocalDateTime.now());
+
+         contentsService.create(doc);
+      }
    }
 }
