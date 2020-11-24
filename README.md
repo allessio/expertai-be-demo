@@ -1,173 +1,55 @@
-# Assesment
-Skeleton code for an assesment using expert.ai API
+# Installation and usage
+------------------------------------------------------------------------------------------------------------
+##Prerequisites
+------------------------------------------------------------------------------------------------------------
 
-The first step is for this exercise is go to the following link [expert.ai](https://developer.expert.ai/ui/login) and create a user and a password to get access to the API.
+- MySQL
+- Tomcat
 
-Once you created the user, you can check the following link [expert.ai API documentation](https://docs.expert.ai/nlapi/v1/) to be familiar with the API.
+------------------------------------------------------------------------------------------------------------
+##DB installation
+------------------------------------------------------------------------------------------------------------
 
-Inside the lib folder of the project sources, you can find a jar file (nlapi-java-sdk-1.0.0-RC.1.jar) containing the Java Client for the [expert.ai](https://developer.expert.ai/) Natural Language API. Leverage Natural Language technology from your Java apps.
+- run DDL_demo.sql
+- run DML_demo.sql
 
-## Launcher.java
+------------------------------------------------------------------------------------------------------------
+##Installation of custom dependencies
+------------------------------------------------------------------------------------------------------------
 
-This class contains the code to launch the java program to test the API.
+- install external jar to .m2:
+	1) locate nlapi-java-sdk-1.0.0-RC.1.jar
+	2) mvn install:install-file -Dfile=[PATH_TO_JAR]\nlapi-java-sdk-1.0.0-RC.1.jar -DgroupId=ai.expert.nlapi -DartifactId=nlapi -Dversion=1.0.0-RC.1 -Dpackaging=jar
 
-## ApiDemo.java
+- add dependency to pom:
 
-This class contains the initialization of the properties, the token aquisition and a principal function to use the 5 different calls present in the JDK.
-
-##### public void startWithWrapper() {**//TODO**}
-  1. Categorization
-  2. Disambiguation Analisys
-  3. Relevants Analisys
-  4. Entities Analisys
-  5. Full Analisys
-  
-## UTILS Folder
-
-This folder contain different classes as to be used as utility for the project
-  
-  - **FileCopier.java** -> This class is used to copy files from a folder to another
-  - **FileReader.java** -> This class is used to read n files from a folder  
-  - **Globals.java** -> Class containing the global values used in the application
-  - **PropertiesUtils.java** -> Class used to iteract with the properties file
-
-## USEFULL INFORMATION TO USE THE JAVA CLIENT
-
-### Document Analisys
-
-You can get the result of the deep linguistic analysis applied to your text as follows
-
-```java
-
-import ai.expert.nlapi.security.Authentication;
-import ai.expert.nlapi.security.Authenticator;
-import ai.expert.nlapi.security.BasicAuthenticator;
-import ai.expert.nlapi.security.Credential;
-import ai.expert.nlapi.v1.API;
-import ai.expert.nlapi.v1.Analyzer;
-import ai.expert.nlapi.v1.AnalyzerConfig;
-
-public class AnalisysTest {
-
-    static StringBuilder sb = new StringBuilder();
-
-    // Sample text to be analyzed
-    static {
-        sb.append("Michael Jordan was one of the best basketball players of all time.");
-        sb.append("Scoring was Jordan's stand-out skill, but he still holds a defensive NBA record, with eight steals in a half.");  
-    }
-
-    public static String getSampleText() {
-        return sb.toString();
-    }
-    
-    //Method for setting the authentication credentials - set your credentials here.
-    public static Authentication createAuthentication() throws Exception {
-        Authenticator authenticator = new BasicAuthenticator(new Credential("PUT HERE YOUR USERNAME", " PUT HERE YOUR PASSWORD"));
-        return new Authentication(authenticator);
-    }
-
-    //Method for selecting the resource to be call by the API; as today, the API provides the standard context only, and  
-    //five languages such as English, French, Spanish, German and Italian
-    public static Analyzer createAnalyzer() throws Exception {
-        return new Analyzer(AnalyzerConfig.builder()
-                                          .withVersion(API.Versions.V1)
-                                          .withContext(API.Contexts.STANDARD)
-                                          .withLanguage(API.Languages.en)
-                                          .withAuthentication(createAuthentication())
-                                          .build());
-    }
-
-    public static void main(String[] args) {
-        try {
-            Analyzer analyzer = createAnalyzer();
-            ResponseDocument response = null;
-            
-            // Disambiguation Analisys
-            response = analyzer.disambiguation(getSampleText());
-            response.prettyPrint();
-
-            // Relevants Analisys
-            response = analyzer.relevants(getSampleText());
-            response.prettyPrint();
-
-            // Entities Analisys
-            response = analyzer.entities(getSampleText());
-            response.prettyPrint();
-            
-            // Full Analisys
-            response = analyzer.analyze(getSampleText());
-            response.prettyPrint();
-        }
-        catch(Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-}
-
-```
+	<dependency>
+		  <groupId>ai.expert.nlapi</groupId>
+		  <artifactId>nlapi</artifactId>
+		  <version>1.0.0-RC.1</version>
+	</dependency>
+	
+------------------------------------------------------------------------------------------------------------
+##App properties setup
+------------------------------------------------------------------------------------------------------------
+	
+- in application.properties:
+	- set [expertai.inputFolder]
+	- set [expertai.outputFolder]
+	- set [expertai.username]
+	- set [<expertai.password]
+	
+- in log4j.properties set [log4j.appender.A2.File]
 
 
-### Document Classification
+------------------------------------------------------------------------------------------------------------
+##Usage - API
+------------------------------------------------------------------------------------------------------------
+API documentation:
+http://localhost:8080/expertai/swagger-ui/index.html
 
-or to run a document classification with respect to the [IPTC Media Topic taxonomy](https://iptc.org/standards/media-topics/)
-
-```java
-
-package ai.expert.nlapi.v1.test;
-
-import ai.expert.nlapi.security.Authentication;
-import ai.expert.nlapi.security.Authenticator;
-import ai.expert.nlapi.security.BasicAuthenticator;
-import ai.expert.nlapi.security.Credential;
-import ai.expert.nlapi.v1.API;
-import ai.expert.nlapi.v1.Categorizer;
-import ai.expert.nlapi.v1.CategorizerConfig;
-import ai.expert.nlapi.v1.message.ResponseDocument;
-
-public class CategorizationTest {
-
-    static StringBuilder sb = new StringBuilder();
-    
-    // Sample text to be analyzed
-    static {
-        sb.append("Michael Jordan was one of the best basketball players of all time.");
-        sb.append("Scoring was Jordan's stand-out skill, but he still holds a defensive NBA record, with eight steals in a half.");  
-    }
-
-    public static String getSampleText() {
-        return sb.toString();
-    }
-
-    //Method for setting the authentication credentials - set your credentials here.
-    public static Authentication createAuthentication() throws Exception {
-        Authenticator authenticator = new BasicAuthenticator(new Credential("PUT HERE YOUR USERNAME", " PUT HERE YOUR PASSWORD"));
-        return new Authentication(authenticator);
-    }
-    
-    //Method for selecting the resource to be call by the API; as today, the API provides the IPTC classifier only, and 
-    //five languages such as English, French, Spanish, German and Italian
-    public static Categorizer createCategorizer() throws Exception {
-        return new Categorizer(CategorizerConfig.builder()
-                                                .withVersion(API.Versions.V1)
-                                                .withTaxonomy(API.Taxonomies.IPTC)
-                                                .withLanguage(API.Languages.en)
-                                                .withAuthentication(createAuthentication())
-                                                .build());
-    }
-
-    public static void main(String[] args) {
-        try {
-            Categorizer categorizer = createCategorizer();
-            
-            //Perform the IPTC classification and store it into a Response Object
-            ResponseDocument categorization = categorizer.categorize(getSampleText());
-            categorization.prettyPrint();
-        }
-        catch(Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-}
-
-```
+Examples of usage:
+http://localhost:8080/expertai/api/contents/all								- [GET] all contents from DB
+http://localhost:8080/expertai/api/contents/217								- [GET] content with ID=217
+http://localhost:8080/expertai/analysis/category							- [POST] analyze categories for ALL persisted documents 
+http://localhost:8080/expertai/analysis/full/?docIDFrom=256&docIDTo=333		- [POST] provide full analysis for documents with IDs from 256 to 333
