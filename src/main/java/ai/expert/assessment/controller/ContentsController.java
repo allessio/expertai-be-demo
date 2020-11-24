@@ -1,6 +1,5 @@
 package ai.expert.assessment.controller;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +29,7 @@ public class ContentsController extends BaseController<Content> {
    private IContentsService contentsService;
 
    @GetMapping("/all")
+   @CrossOrigin
    @ApiOperation(value = "List of uploaded documents", notes = "Entry point REST for getting the list of uploaded documents")
    public Page<ContentDto> getAll(Pageable pageable, HttpServletRequest request) {
 
@@ -53,6 +51,7 @@ public class ContentsController extends BaseController<Content> {
 //   }
 
    @GetMapping("/{id}")
+   @CrossOrigin
    @ApiOperation(value = "Get document by its ID", notes = "Entry point REST to get document by its ID")
    public ContentDto getContentByID(@PathVariable(value = "id") Long idContent, HttpServletRequest request) {
 
