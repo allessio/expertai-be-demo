@@ -43,7 +43,7 @@ public class ContentsController extends BaseController<Content> {
       return pagedResult;
    }
    
-   // TODO: alternative pagination
+   // TODO: alternative pagination with links prev/next/self
 //   @RepositoryRestResource(collectionResourceRel = "content", path = "")
 //   public interface ContentsRepository extends PagingAndSortingRepository<Content, Long> {
 //

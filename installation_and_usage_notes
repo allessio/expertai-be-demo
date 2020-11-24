@@ -42,8 +42,17 @@ App properties setup
 
 
 ------------------------------------------------------------------------------------------------------------
-Other
+Usage - API
 ------------------------------------------------------------------------------------------------------------
-
 API documentation:
 http://localhost:8080/expertai/swagger-ui/index.html
+
+Examples of usage:
+http://localhost:8080/expertai/api/contents/all								- [GET] all contents from DB
+http://localhost:8080/expertai/api/contents/217								- [GET] content with ID=217
+http://localhost:8080/expertai/analysis/category							- [POST] analyze categories for ALL persisted documents 
+http://localhost:8080/expertai/analysis/full/?docIDFrom=256&docIDTo=333		- [POST] provide full analysis for documents with IDs from 256 to 333
+
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+

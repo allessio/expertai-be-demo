@@ -40,13 +40,8 @@ public class ContentAnalysisService implements IContentAnalysisService {
 
    private static final Logger logger = LogManager.getLogger();
 
-   public void analyzeAllTypesAllPersistedDocs() {
-//      analyzeCategoriesAllPersistedDocs();
-//      analyzeFullAllPersistedDocs();
-   }
-
    /**
-    * Category analyzer for all documents persisted in DB.
+    * Category analyzer for ALL documents persisted in DB.
     */
    @Override
    public void analyzeCategoriesAllPersistedDocs() {
@@ -104,13 +99,20 @@ public class ContentAnalysisService implements IContentAnalysisService {
       }
    }
 
-   
+   /**
+    * Full analyzer for ALL documents persisted in DB.
+    */
    public void analyzeFullAllPersistedDocs() {
       analyzeFullPersistedDocs(0L, -1L);
    }
    
    /**
-    * Category analyzer for all documents persisted in DB.
+    * Full analyzer for certain documents persisted in DB. 
+    * Document to analyze are identified by range of ID document docIDFrom to docIDTo.
+    * If docIDFrom > docIDFrom, all documents are analyzed
+    * 
+    * @param docIDFrom
+    * @param docIDTo
     */
    public void analyzeFullPersistedDocs(Long docIDFrom, Long docIDTo) {
       try {
